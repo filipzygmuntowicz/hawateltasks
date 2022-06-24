@@ -3,6 +3,8 @@ import argparse
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument('--task', help="""
+    task name, choose from: update_prices, excel, both (default is both)""")
     parser.add_argument('--username', help="""
     your username""")
     parser.add_argument("--password", help="""
@@ -23,5 +25,10 @@ if __name__ == "__main__":
                 args.username, args.password, args.host, args.db_name)
     else:
         op = tasks.Operations()
-    op.update_prices()
-    op.excel()
+    if args.task is None or args.task == "both":
+        op.update_prices()
+        op.excel()
+    elif args.task == "excel":
+        op.excel()
+    elif args.task == "update_prices":
+        op.update_prices()
